@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { client } from '../libs/microcms';
-import styles from './page.module.css';
-import Pagination from './components/Pagination';
+import { client } from '../../../libs/microcms';
+import styles from '../../page.module.css';
+import Pagination from '../../components/Pagination';
 
 // ブログ記事の型定義を拡張
 type Post = {
@@ -26,7 +26,7 @@ async function getBlogPosts(page: number = 1, limit: number = 6): Promise<BlogPo
   const data = await client.get({
     endpoint: 'blog',
     queries: {
-      fields: 'id,title,publishedAt,category',  // 日付とカテゴリ情報も取得
+      fields: 'id,title,publishedAt,category',
       limit,
       offset,
     },
@@ -34,8 +34,33 @@ async function getBlogPosts(page: number = 1, limit: number = 6): Promise<BlogPo
   return data;
 }
 
-export default async function Home() {
-  const data = await getBlogPosts(1);
+// 全記事数を取得してページ数を計算
+async function getTotalPages(perPage: number = 6): Promise<number> {
+  const data = await client.get({
+    endpoint: 'blog',
+    queries: {
+      fields: 'id',
+      limit: 1,
+    },
+  });
+  return Math.ceil(data.totalCount / perPage);
+}
+
+export default async function BlogPage({ params }: { params: Promise<{ pageNumber: string }> }) {
+  const { pageNumber } = await params;
+  const currentPage = parseInt(pageNumber, 10);
+  
+  // ページ番号が無効な場合はエラー
+  if (isNaN(currentPage) || currentPage < 1) {
+    throw new Error('Invalid page number');
+  }
+
+  const data = await getBlogPosts(currentPage);
+  
+  // ページが存在しない場合はエラー
+  if (data.contents.length === 0 && currentPage > 1) {
+    throw new Error('Page not found');
+  }
 
   return (
     <main className={styles.main}>
@@ -49,7 +74,7 @@ export default async function Home() {
       </div>
 
       <div className={styles.featuredSection}>
-        <h2 className={styles.sectionTitle}>最新の記事</h2>
+        <h2 className={styles.sectionTitle}>記事一覧 - ページ {currentPage}</h2>
         <div className={styles.cardGrid}>
           {data.contents.map((post) => (
             <Link href={`/blog/${post.id}`} key={post.id} className={styles.card}>
@@ -77,7 +102,7 @@ export default async function Home() {
         
         <Pagination 
           totalCount={data.totalCount} 
-          currentPage={1} 
+          currentPage={currentPage} 
           perPage={6}
         />
       </div>
@@ -95,3 +120,12 @@ export default async function Home() {
     </main>
   );
 }
+
+// 静的パスを生成
+export async function generateStaticParams() {
+  const totalPages = await getTotalPages(6);
+  
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    pageNumber: (i + 2).toString(), // 2ページ目以降を生成（1ページ目は/で表示）
+  }));
+} 
