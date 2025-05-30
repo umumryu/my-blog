@@ -22,7 +22,7 @@ export default function Pagination({
 
   const generatePageNumbers = () => {
     const pages: (number | string)[] = [];
-    const showPages = 5; // 表示するページ数
+    const showPages = 6; // 表示するページ数
     
     if (totalPages <= showPages) {
       for (let i = 1; i <= totalPages; i++) {
@@ -67,7 +67,7 @@ export default function Pagination({
             className={styles.paginationButton}
             aria-label="前のページ"
           >
-            ← 前へ
+            PREV
           </Link>
         )}
 
@@ -107,7 +107,7 @@ export default function Pagination({
             className={styles.paginationButton}
             aria-label="次のページ"
           >
-            次へ →
+            NEXT
           </Link>
         )}
       </div>

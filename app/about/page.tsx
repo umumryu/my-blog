@@ -1,20 +1,28 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function About() {
   return (
     <main className={styles.main}>
       <div className={styles.container}>
-        <h1 className={styles.title}>自己紹介</h1>
+        <h1 className={styles.title}>About me</h1>
         
         <div className={styles.profile}>
           <div className={styles.profileImage}>
-            {/* プロフィール画像の代わりにプレースホルダー */}
-            <div className={styles.placeholder}></div>
+            {/* プロフィール画像 */}
+            <Image
+              src="/profile.png"
+              alt="Norifumi Yamamoto のプロフィール画像"
+              width={200}
+              height={200}
+              className={styles.profileImageImg}
+              priority
+            />
           </div>
           
           <div className={styles.profileInfo}>
-            <h2 className={styles.name}>名前</h2>
+            <h2 className={styles.name}>Norifumi Yamamoto</h2>
             <p className={styles.bio}>
               ここに自己紹介文を入力してください。あなたの経歴、興味、専門分野などについて書くことができます。
               読者があなたのことをより良く理解できるように、簡潔かつ魅力的な自己紹介を心がけましょう。
@@ -30,11 +38,10 @@ export default function About() {
             </div>
             
             <div className={styles.contact}>
-              <h3>連絡先</h3>
+              <h3>Links</h3>
               <ul>
-                <li>メール: example@example.com</li>
-                <li>Twitter: @username</li>
-                <li>GitHub: github.com/username</li>
+                <li className={styles.socialLinks}><a href="https://github.com/umumryu" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li className={styles.socialLinks}><a href="https://soundcloud.com/noryumum" target="_blank" rel="noopener noreferrer">SoundCloud</a></li>
               </ul>
             </div>
           </div>
