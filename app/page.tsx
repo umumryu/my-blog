@@ -21,7 +21,7 @@ type BlogPostsResult = {
   offset: number;
 };
 
-async function getBlogPosts(page: number = 1, limit: number = 6): Promise<BlogPostsResult> {
+async function getBlogPosts(page: number = 1, limit: number = 3): Promise<BlogPostsResult> {
   const offset = (page - 1) * limit;
   const data = await client.get({
     endpoint: 'blog',
@@ -95,15 +95,13 @@ export default async function Home() {
           <Pagination 
             totalCount={data.totalCount} 
             currentPage={1} 
-            perPage={6}
+            perPage={3}
           />
         </div>
 
         <footer className={styles.footer}>
           <div className={styles.footerContent}>
             <p>© 2025 noriumum. All rights reserved.</p>
-            <div className={styles.footerLinks}>
-            </div>
           </div>
         </footer>
       </div>

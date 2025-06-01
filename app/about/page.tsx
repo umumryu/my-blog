@@ -24,17 +24,18 @@ export default function About() {
           <div className={styles.profileInfo}>
             <h2 className={styles.name}>Norifumi Yamamoto</h2>
             <p className={styles.bio}>
-              ここに自己紹介文を入力してください。あなたの経歴、興味、専門分野などについて書くことができます。
-              読者があなたのことをより良く理解できるように、簡潔かつ魅力的な自己紹介を心がけましょう。
+            初めまして、山本です。このブログでは、私が学んだことや趣味で作った作品などを公開しています。
+              
             </p>
             
             <div className={styles.skills}>
-              <h3>スキル</h3>
-              <ul>
-                <li>スキル1</li>
-                <li>スキル2</li>
-                <li>スキル3</li>
-              </ul>
+              <h3>現在学習しいていること</h3>
+             <p>JavaScript, HTML, CSS</p>
+            </div>
+
+            <div className={styles.skills}>
+              <h3>今後学習したいこと</h3>
+             <p>UI/UX, JQuery, React, Next.js</p>
             </div>
             
             <div className={styles.contact}>

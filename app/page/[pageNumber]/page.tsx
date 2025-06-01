@@ -21,7 +21,7 @@ type BlogPostsResult = {
   offset: number;
 };
 
-async function getBlogPosts(page: number = 1, limit: number = 6): Promise<BlogPostsResult> {
+async function getBlogPosts(page: number = 1, limit: number = 3): Promise<BlogPostsResult> {
   const offset = (page - 1) * limit;
   const data = await client.get({
     endpoint: 'blog',
@@ -35,7 +35,7 @@ async function getBlogPosts(page: number = 1, limit: number = 6): Promise<BlogPo
 }
 
 // 全記事数を取得してページ数を計算
-async function getTotalPages(perPage: number = 6): Promise<number> {
+async function getTotalPages(perPage: number = 3): Promise<number> {
   const data = await client.get({
     endpoint: 'blog',
     queries: {
@@ -64,68 +64,81 @@ export default async function BlogPage({ params }: { params: Promise<{ pageNumbe
 
   return (
     <main className={styles.main}>
-      <div className={styles.header}>
-        <h1 className={styles.siteTitle}>マイブログ</h1>
-        <div className={styles.nav}>
-          <Link href="/about" className={styles.navLink}>
-            about
-          </Link>
-        </div>
-      </div>
-
-      <div className={styles.featuredSection}>
-        <h2 className={styles.sectionTitle}>記事一覧 - ページ {currentPage}</h2>
-        <div className={styles.cardGrid}>
-          {data.contents.map((post) => (
-            <Link href={`/blog/${post.id}`} key={post.id} className={styles.card}>
-              <div className={styles.cardImagePlaceholder}></div>
-              <div className={styles.cardContent}>
-                <div className={styles.cardMeta}>
-                  {post.category && (
-                    <span className={styles.cardCategory}>{post.category.name}</span>
-                  )}
-                  {post.publishedAt && (
-                    <time className={styles.cardDate}>
-                      {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
-                    </time>
-                  )}
-                </div>
-                <h3 className={styles.cardTitle}>{post.title}</h3>
-                <div className={styles.cardReadMore}>
-                  <span>読む</span>
-                  <span className={styles.arrowIcon}>→</span>
-                </div>
-              </div>
+      {/* 背景動画 */}
+      <video 
+        className={styles.backgroundVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/neptune.mp4" type="video/mp4" />
+        お使いのブラウザは動画をサポートしていません。
+      </video>
+      
+      {/* オーバーレイ */}
+      <div className={styles.videoOverlay}></div>
+      
+      {/* メインコンテンツ */}
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h1 className={styles.siteTitle}>noriumum</h1>
+          <div className={styles.nav}>
+            <Link href="/about" className={styles.navLink}>
+              about
             </Link>
-          ))}
-        </div>
-        
-        <Pagination 
-          totalCount={data.totalCount} 
-          currentPage={currentPage} 
-          perPage={6}
-        />
-      </div>
-
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <p>© 2024 マイブログ. All rights reserved.</p>
-          <div className={styles.footerLinks}>
-            <Link href="/about">プロフィール</Link>
-            <Link href="/">プライバシーポリシー</Link>
-            <Link href="/">お問い合わせ</Link>
           </div>
         </div>
-      </footer>
+
+        <div className={styles.featuredSection}>
+          <h2 className={styles.sectionTitle}>記事一覧 - ページ {currentPage}</h2>
+          <div className={styles.cardGrid}>
+            {data.contents.map((post) => (
+              <Link href={`/blog/${post.id}`} key={post.id} className={styles.card}>
+                <div className={styles.cardImagePlaceholder}></div>
+                <div className={styles.cardContent}>
+                  <div className={styles.cardMeta}>
+                    {post.category && (
+                      <span className={styles.cardCategory}>{post.category.name}</span>
+                    )}
+                    {post.publishedAt && (
+                      <time className={styles.cardDate}>
+                        {new Date(post.publishedAt).toLocaleDateString('ja-JP')}
+                      </time>
+                    )}
+                  </div>
+                  <h3 className={styles.cardTitle}>{post.title}</h3>
+                  <div className={styles.cardReadMore}>
+                    <span>読む</span>
+                    <span className={styles.arrowIcon}>→</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          
+          <Pagination 
+            totalCount={data.totalCount} 
+            currentPage={currentPage} 
+            perPage={3}
+          />
+        </div>
+
+        <footer className={styles.footer}>
+          <div className={styles.footerContent}>
+            <p>© 2025 noriumum. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
     </main>
   );
 }
 
 // 静的パスを生成
 export async function generateStaticParams() {
-  const totalPages = await getTotalPages(6);
+  const totalPages = await getTotalPages(3);
   
   return Array.from({ length: totalPages - 1 }, (_, i) => ({
     pageNumber: (i + 2).toString(), // 2ページ目以降を生成（1ページ目は/で表示）
   }));
-} 
+}

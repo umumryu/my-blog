@@ -11,7 +11,7 @@ type PaginationProps = {
 export default function Pagination({ 
   totalCount, 
   currentPage, 
-  perPage = 6, 
+  perPage = 3, 
   basePath = '/page' 
 }: PaginationProps) {
   const totalPages = Math.ceil(totalCount / perPage);
@@ -22,7 +22,7 @@ export default function Pagination({
 
   const generatePageNumbers = () => {
     const pages: (number | string)[] = [];
-    const showPages = 6; // 表示するページ数
+    const showPages = 3; // 表示するページ数
     
     if (totalPages <= showPages) {
       for (let i = 1; i <= totalPages; i++) {

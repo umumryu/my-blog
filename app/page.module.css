@@ -151,12 +151,12 @@
   overflow: hidden;
   transition: all 0.3s ease;
   height: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgb(28, 121, 228);
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 20px rgba(20, 196, 228, 0.76);
   background-color: var(--gray-alpha-200);
 }
 
@@ -183,7 +183,7 @@
 }
 
 .cardCategory {
-  background-color: rgba(58, 123, 213, 0.1);
+  background-color: rgba(38, 109, 209, 0.116);
   color: #3a7bd5;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
