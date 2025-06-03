@@ -35,7 +35,7 @@ export default function About() {
 
             <div className={styles.skills}>
               <h3>今後学習したいこと</h3>
-             <p>UI/UX, JQuery, React, Next.js</p>
+             <p>JQuery, React, Next.js, シェーダー,グラッフィック関連</p>
             </div>
             
             <div className={styles.contact}>

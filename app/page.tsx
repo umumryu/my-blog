@@ -101,7 +101,7 @@ export default async function Home() {
 
         <footer className={styles.footer}>
           <div className={styles.footerContent}>
-            <p>© 2025 noriumum. All rights reserved.</p>
+            <p>© 2025 noriumum</p>
           </div>
         </footer>
       </div>
