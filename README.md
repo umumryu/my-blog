@@ -1,3 +1,8 @@
+##MyBlog
+
+MicroCMS(https://blog.microcms.io/microcms-next15-jamstack-blog/)を使用した個人ブログ(https://noriumum.vercel.app/)です。
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
